@@ -1,57 +1,161 @@
-import { Search, ArrowRight } from 'lucide-react';
-
 export default function Hero() {
   return (
-    <div className="relative min-h-[600px] bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900">
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f"
-          className="w-full h-full object-cover mix-blend-overlay opacity-40"
-          alt="University campus"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-purple-900/50" />
-      </div>
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full py-20">
-        <div className="flex flex-col justify-center h-full text-white max-w-3xl">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-            Your Success Starts Here
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed">
-            Access resources, support services, and opportunities to enhance your university experience
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Search for services, resources, or support..."
-                className="w-full px-6 py-4 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/95 backdrop-blur-sm"
-              />
-              <Search className="absolute right-4 top-4 h-6 w-6 text-gray-400" />
+    <>
+      <div className="bg-white">
+        <header className="bg-[#FCF8F1] bg-opacity-30">
+          <div className="px-4 mx-auto sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 lg:h-20">
+              <div className="flex-shrink-0">
+                <a href="#" title="" className="flex">
+                  <img
+                    className="w-auto h-8"
+                    src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg"
+                    alt=""
+                  />
+                </a>
+              </div>
+
+              <button
+                type="button"
+                className="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100 hover:bg-gray-100"
+              >
+                <svg
+                  className="block w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 8h16M4 16h16"
+                  />
+                </svg>
+
+                <svg
+                  className="hidden w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
+                <a
+                  href="#"
+                  title=""
+                  className="text-base text-black transition-all duration-200 hover:text-opacity-80"
+                >
+                  Academic Support
+                </a>
+
+                <a
+                  href="#"
+                  title=""
+                  className="text-base text-black transition-all duration-200 hover:text-opacity-80"
+                >
+                  Student Life
+                </a>
+
+                <a
+                  href="#"
+                  title=""
+                  className="text-base text-black transition-all duration-200 hover:text-opacity-80"
+                >
+                  Resources
+                </a>
+
+                <a
+                  href="#"
+                  title=""
+                  className="text-base text-black transition-all duration-200 hover:text-opacity-80"
+                >
+                  Support Services
+                </a>
+              </div>
+
+              <a
+                href="/login"
+                title=""
+                className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-blue-700 hover:text-white focus:text-white focus:bg-blue-700 font-semibold text-white bg-blue-600 rounded-full"
+                role="button"
+              >
+                Student Portal
+              </a>
             </div>
-            <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl font-semibold flex items-center justify-center group transition-all">
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </button>
           </div>
-          
-          <div className="flex gap-8 text-sm">
-            <div className="flex items-center">
-              <div className="h-2 w-2 rounded-full bg-green-400 mr-2" />
-              24/7 Support Available
-            </div>
-            <div className="flex items-center">
-              <div className="h-2 w-2 rounded-full bg-yellow-400 mr-2" />
-              100+ Resources
-            </div>
-            <div className="flex items-center">
-              <div className="h-2 w-2 rounded-full bg-purple-400 mr-2" />
-              Expert Guidance
+        </header>
+
+        <section className="bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-24">
+          <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
+              <div>
+                <p className="text-base font-semibold tracking-wider text-blue-600 uppercase">
+                  Student Affairs Office
+                </p>
+                <h1 className="mt-4 text-4xl font-bold text-black lg:mt-8 sm:text-6xl xl:text-7xl">
+                  Supporting Your Academic Journey
+                </h1>
+                <p className="mt-4 text-base text-black lg:mt-8 sm:text-xl">
+                  Access resources, support services, and guidance for your success at our university.
+                </p>
+
+                <a
+                  href="#"
+                  title=""
+                  className="inline-flex items-center px-6 py-4 mt-8 font-semibold text-white transition-all duration-200 bg-blue-600 rounded-full lg:mt-16 hover:bg-blue-700 focus:bg-blue-700"
+                  role="button"
+                >
+                  Get Support
+                  <svg
+                    className="w-6 h-6 ml-8 -mr-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                      d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </a>
+
+                <p className="mt-5 text-gray-600">
+                  Current student?{" "}
+                  <a
+                    href="#"
+                    title=""
+                    className="text-blue-600 transition-all duration-200 hover:underline"
+                  >
+                    Sign in to portal
+                  </a>
+                </p>
+              </div>
+
+              <div>
+                <img
+                  className="w-full"
+                  src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/1/hero-img.png"
+                  alt=""
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 }

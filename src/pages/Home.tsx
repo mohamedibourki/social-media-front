@@ -14,24 +14,27 @@ import SupportChannels from "../components/home/SupportChannels";
 import CampusLife from "../components/home/CampusLife";
 import Clubs from "../components/home/Clubs";
 import Conferences from "../components/home/Conferences";
+import Team from "../components/home/Team";
+import Partners from "../components/home/Partners";
 
 export const Home = () => {
   return (
     <div className="min-h-screen">
-      <Navbar />
       <Hero />
+      <Partners />
       <Stats />
       <Announcements />
-      <Services />
-      <Timetable />
-      <QuickLinks />
       <AchievementShowcase />
+      <Services />
+      {/* <Timetable /> */}
+      {/* <QuickLinks /> */}
       <UpcomingEvents />
-      <CampusLife />
+      {/* <CampusLife /> */}
       <Clubs />
-      <ResourceHub />
-      <Conferences />
-      <NewsEvents />
+      {/* <ResourceHub /> */}
+      {/* <Conferences /> */}
+      {/* <NewsEvents /> */}
+      <Team />
       <SupportChannels />
       <Testimonials />
 
