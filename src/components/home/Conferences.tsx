@@ -1,5 +1,4 @@
-import React from 'react';
-import { MapPin, Calendar, Users, ExternalLink } from 'lucide-react';
+import { MapPin, Calendar, ExternalLink } from 'lucide-react';
 
 const conferences = [
   {

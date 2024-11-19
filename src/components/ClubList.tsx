@@ -1,13 +1,12 @@
-import { Club } from '@/types';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Users, MapPin } from 'lucide-react';
+import { Card, CardContent } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { ScrollArea } from "./ui/scroll-area";
+import { Users, MapPin } from "lucide-react";
 
 interface ClubListProps {
-  clubs: Club[];
-  selectedClub: Club | null;
-  onSelectClub: (club: Club) => void;
+  clubs: any[];
+  selectedClub: any | null;
+  onSelectClub: (club: any) => void;
 }
 
 export function ClubList({ clubs, selectedClub, onSelectClub }: ClubListProps) {
@@ -15,15 +14,15 @@ export function ClubList({ clubs, selectedClub, onSelectClub }: ClubListProps) {
     <ScrollArea className="h-[calc(100vh-8rem)] pr-4">
       <div className="space-y-4">
         {clubs.map((club) => (
-          <Card 
+          <Card
             key={club.id}
             className={`cursor-pointer transition-all hover:shadow-md ${
-              selectedClub?.id === club.id ? 'ring-2 ring-primary' : ''
+              selectedClub?.id === club.id ? "ring-2 ring-primary" : ""
             }`}
             onClick={() => onSelectClub(club)}
           >
             <CardContent className="p-4">
-              <div 
+              <div
                 className="h-32 rounded-md bg-cover bg-center mb-4"
                 style={{ backgroundImage: `url(${club.coverImage})` }}
               />

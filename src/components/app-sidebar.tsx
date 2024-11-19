@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   AudioWaveform,
   BookOpen,
-  Bot,
   Calendar,
   ChevronsUpDown,
   Clock,
@@ -16,17 +15,14 @@ import {
   LifeBuoy,
   Map,
   MessageCircle,
-  PieChart,
   Plus,
   Send,
-  Settings2,
   SquareTerminal,
   Users,
 } from "lucide-react";
 
 import { NavMain } from "../components/nav-main";
 import { NavProjects } from "../components/nav-projects";
-import { NavSecondary } from "../components/nav-secondary";
 import { NavUser } from "../components/nav-user";
 import {
   Sidebar,

@@ -15,8 +15,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { PasswordInput } from "../pages/PasswordInput";
-import axiosInstance, { axiosWithoutAuth } from "../api/axiosinstance";
-import useAuth from "../hooks/use-auth";
+import axiosInstance from "../api/axiosinstance";
 
 const formSchema = z.object({
   email: z
@@ -36,7 +35,6 @@ export const UserAuthForm = () => {
   const [searchParams] = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const [loading, startTransition] = useTransition();
-  const { login } = useAuth();
 
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),

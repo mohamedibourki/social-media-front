@@ -1,4 +1,3 @@
-import React from 'react';
 import { MessageCircle, Phone, Mail, Video, Calendar, HelpCircle } from 'lucide-react';
 
 const channels = [
@@ -78,7 +77,7 @@ export default function SupportChannels() {
               key={channel.title}
               className="relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${accentColors[channel.accent]} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              <div className={`absolute inset-0 bg-gradient-to-br ${accentColors[channel.accent as keyof typeof accentColors]} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
               <div className="relative p-8 bg-white group-hover:bg-opacity-90 transition-colors duration-300">
                 <channel.icon className={`h-10 w-10 mb-6 text-${channel.accent}-500`} />
                 <h3 className="text-xl font-semibold mb-2">{channel.title}</h3>
@@ -86,7 +85,7 @@ export default function SupportChannels() {
                 <div className="text-sm text-gray-500 mb-6">
                   Available: {channel.availability}
                 </div>
-                <button className={`w-full py-2 px-4 rounded-lg bg-gradient-to-r ${accentColors[channel.accent]} text-white hover:opacity-90 transition-opacity`}>
+                <button className={`w-full py-2 px-4 rounded-lg bg-gradient-to-r ${accentColors[channel.accent as keyof typeof accentColors]} text-white hover:opacity-90 transition-opacity`}>
                   {channel.buttonText}
                 </button>
               </div>

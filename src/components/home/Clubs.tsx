@@ -1,5 +1,4 @@
-import React from 'react';
-import { Users, Star, Award, Calendar } from 'lucide-react';
+import { Users, Star, Award, Calendar } from "lucide-react";
 
 const clubs = [
   {

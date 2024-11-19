@@ -1,4 +1,3 @@
-import React from 'react';
 import { Bell, Pin, Calendar, ArrowRight } from 'lucide-react';
 
 const announcements = [
@@ -66,7 +65,7 @@ export default function Announcements() {
                 <div className="flex-1">
                   <div className="flex items-center space-x-3">
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      priorityColors[announcement.priority]
+                      priorityColors[announcement.priority as keyof typeof priorityColors]
                     }`}>
                       {announcement.type}
                     </span>
