@@ -1,4 +1,3 @@
-import React from 'react';
 import { BookOpen, Download, ExternalLink } from 'lucide-react';
 
 const resources = [

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, Book, Users, HeartPulse, Award, HelpCircle } from 'lucide-react';
 
 const quickLinks = [

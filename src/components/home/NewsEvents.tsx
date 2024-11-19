@@ -1,5 +1,3 @@
-import React from 'react';
-
 const news = [
   {
     date: 'Mar 15, 2024',
