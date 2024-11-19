@@ -1,10 +1,8 @@
 import { useState } from "react";
 import {
   Search,
-  Filter,
   SortAsc,
   SortDesc,
-  Upload,
   Folder,
   FileText,
   Download,
@@ -13,15 +11,12 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../components/ui/dialog";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Badge } from "../components/ui/badge";
-import { Progress } from "../components/ui/progress";
 import { motion } from "framer-motion";
 import { cn } from "../lib/utils";
 
@@ -33,7 +28,6 @@ export default function Documents() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   const documents = {
     courses: [
@@ -173,7 +167,6 @@ export default function Documents() {
         url: "/documents/poo/individual-project.pdf",
         deadline: "2024-04-25",
         subject: "POO",
-        type: "Individual",
       },
     ],
     tutorials: [
@@ -265,26 +258,6 @@ export default function Documents() {
         }
         return 0;
       });
-  };
-
-  // Handle file upload
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    // Simulated upload progress
-    setUploadProgress(0);
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 500);
   };
 
   // Preview document

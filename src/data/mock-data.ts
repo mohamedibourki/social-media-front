@@ -1,6 +1,4 @@
-import { Club, Post } from '@/types';
-
-export const clubs: Club[] = [
+export const clubs: any[] = [
   {
     id: '1',
     name: 'Chess Club',
@@ -39,7 +37,7 @@ export const clubs: Club[] = [
   },
 ];
 
-export const posts: Post[] = [
+export const posts: any[] = [
   {
     id: '1',
     clubId: '1',
