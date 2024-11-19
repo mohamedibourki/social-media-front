@@ -1,11 +1,30 @@
-import { Link } from "react-router-dom";
-import { cn } from "../lib/utils";
-import { buttonVariants } from "../components/ui/button";
-import { UserAuthForm } from "./UserAuthForm";
+import { Link, Navigate } from "react-router-dom";
+import { cn } from "../../lib/utils";
+import { buttonVariants } from "../../components/ui/button";
+import { UserAuthForm } from "../../components/UserAuthForm";
+import useAuth from "../../hooks/use-auth";
 
 export const Login = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/home" />;
+  }
+
   return (
-    <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+    <div 
+      className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0"
+      role="main"
+      aria-label="Login page"
+    >
       <Link
         to="/examples/authentication"
         className={cn(
@@ -44,11 +63,17 @@ export const Login = () => {
         </div>
       </div>
       <div className="flex h-full items-center p-4 lg:p-8">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]" tabIndex={-1}>
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
             <p className="text-sm text-muted-foreground">
               Enter your email and password below to login to your account
+            </p>
+            <p className="text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-primary hover:underline">
+                Sign up
+              </Link>
             </p>
           </div>
           <UserAuthForm />

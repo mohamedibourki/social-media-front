@@ -40,6 +40,7 @@ import { ChatMessageList } from "../components/ui/chat/chat-message-list";
 import { ChatInput } from "../components/ui/chat/chat-input";
 import { FormEvent, useEffect, useState, useRef } from "react";
 import { socketService } from "../services/socket";
+import Cookies from "js-cookie";
 
 interface Message {
   id: number;
@@ -58,7 +59,7 @@ export const Chats = () => {
 
   useEffect(() => {
     // Connect socket when component mounts
-    const token = localStorage.getItem('socketToken');
+    const token = Cookies.get("socketToken");
     if (token) {
       socketService.connect(token);
     }

@@ -1,4 +1,4 @@
-import { Button } from "../components/ui/button";
+import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
@@ -6,16 +6,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../components/ui/form";
-import { Input } from "../components/ui/input";
+} from "./ui/form";
+import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { PasswordInput } from "./PasswordInput";
-import axios from "axios";
+import { PasswordInput } from "../pages/PasswordInput";
+import axiosInstance, { axiosWithoutAuth } from "../api/axiosinstance";
+import useAuth from "../hooks/use-auth";
 
 const formSchema = z.object({
   email: z
@@ -31,22 +32,66 @@ const formSchema = z.object({
 type UserFormValue = z.infer<typeof formSchema>;
 
 export const UserAuthForm = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const [loading, startTransition] = useTransition();
+  const { login } = useAuth();
+
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = async (data: UserFormValue) => {
-    const response = await axios.post(
-      "http://localhost:3000/api/auth/login",
-      data
-    );
+    startTransition(() => {
+      void (async () => {
+        try {
+          const response = await axiosInstance.post(
+            "/api/auth/login",
+            data,
+            {
+              withCredentials: true,
+            }
+          );
 
-    if (response.status === 200) {
-      console.log("hello")
-    }
+          if (response.status === 200) {
+            // Show success message
+            toast.success("Logged in successfully");
+
+            // Redirect to callback URL or default dashboard
+            navigate(callbackUrl || "/home");
+          }
+        } catch (error: any) {
+          // Handle specific error cases
+          if (error.response) {
+            switch (error.response.status) {
+              case 401:
+                toast.error("Invalid email or password");
+                form.setValue("password", "");
+                break;
+              case 429:
+                toast.error("Too many login attempts. Please try again later");
+                break;
+              case 403:
+                toast.error("Account not verified. Please check your email");
+                break;
+              default:
+                toast.error(error.response.data?.message || "Failed to login");
+                form.reset();
+            }
+          } else {
+            // Network or other errors
+            toast.error(
+              "Connection error. Please check your internet connection"
+            );
+          }
+        }
+      })();
+    });
   };
 
   return (
@@ -68,6 +113,7 @@ export const UserAuthForm = () => {
                       type="email"
                       placeholder="name@example.com"
                       disabled={loading}
+                      autoComplete="email"
                       {...field}
                     />
                   </FormControl>
@@ -79,7 +125,7 @@ export const UserAuthForm = () => {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }: { field: any }) => (
+              render={({ field }) => (
                 <FormItem className="space-y-1">
                   <div className="flex items-center justify-between">
                     <FormLabel>Password</FormLabel>
@@ -91,7 +137,12 @@ export const UserAuthForm = () => {
                     </Link>
                   </div>
                   <FormControl>
-                    <PasswordInput placeholder="********" {...field} />
+                    <PasswordInput
+                      placeholder="********"
+                      autoComplete="current-password"
+                      disabled={loading}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,7 +154,7 @@ export const UserAuthForm = () => {
               className="ml-auto w-full mt-2"
               type="submit"
             >
-              Login
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
         </form>

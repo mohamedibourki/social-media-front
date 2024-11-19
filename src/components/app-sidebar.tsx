@@ -80,76 +80,74 @@ const data = {
       title: "Chats",
       url: "/home/chats",
       icon: MessageCircle,
-      isActive: true,
-      items: [
-        {
-          title: "Chats",
-          url: "/home/chats",
-        },
-        {
-          title: "Groupes",
-          url: "/home/chats/groupes",
-        },
-        {
-          title: "Clubs",
-          url: "/home/chats/clubs",
-        },
-      ],
     },
+  ],
+  quickAccess: [
     {
-      title: "Announcements",
-      url: "#",
-      icon: Info,
-      isActive: false,
-    },
-    {
-      title: "Events",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Timetables",
-      url: "#",
+      name: "Class Schedule",
+      url: "/class-schedule",
       icon: Clock,
     },
     {
-      title: "Courses",
-      url: "#",
+      name: "Campus Map",
+      url: "/map",
+      icon: Map,
+    },
+    {
+      name: "Events",
+      url: "/events",
+      icon: Calendar,
+    },
+  ],
+  academics: [
+    {
+      name: "Documents",
+      url: "/documents",
       icon: Library,
     },
     {
-      title: "Clubs",
-      url: "#",
-      icon: Guitar,
+      name: "Academic Records",
+      url: "/records",
+      icon: BookOpen,
     },
   ],
-  navSecondary: [
+  studentLife: [
     {
-      title: "Support",
-      url: "#",
+      name: "Clubs & Societies",
+      url: "/clubs",
+      icon: Guitar,
+    },
+    {
+      name: "Student Services",
+      url: "/services",
+      icon: Users,
+    },
+    {
+      name: "Career Center",
+      url: "/career",
+      icon: Frame,
+    },
+  ],
+  support: [
+    {
+      name: "Student Resources",
+      url: "/resources",
+      icon: Info,
+    },
+    {
+      name: "IT Help Desk",
+      url: "/it-support",
+      icon: SquareTerminal,
+    },
+    {
+      name: "Support",
+      url: "/support",
       icon: LifeBuoy,
     },
     {
-      title: "Feedback",
-      url: "#",
+      name: "FAQ",
+      url: "/faq",
       icon: Send,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 };
@@ -219,8 +217,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavProjects title="Quick Access" projects={data.quickAccess} />
+        <NavProjects title="Academics" projects={data.academics} />
+        <NavProjects title="Student Life" projects={data.studentLife} />
+        <NavProjects title="Support" projects={data.support} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

@@ -81,3 +81,29 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  body {
+    padding: 20px;
+  }
+  
+  .print-break-inside-avoid {
+    break-inside: avoid;
+  }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 0.8s ease-in-out;
+}
