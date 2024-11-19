@@ -321,12 +321,8 @@ const generateICSFile = (
 };
 
 export default function ClassSchedule() {
-  const [selectedClass, setSelectedClass] = useState<Class | null>(null);
-  const [showNoteInput, setShowNoteInput] = useState(false);
-  const [newNote, setNewNote] = useState("");
-  const [attendance, setAttendance] = useState<Record<string, Attendance>>({});
-  const [view, setView] = useState<"week" | "day">("week");
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [, setSelectedClass] = useState<Class | null>(null);
+  const [, setAttendance] = useState<Record<string, Attendance>>({});
   const [filterSubject, setFilterSubject] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
@@ -341,9 +337,6 @@ export default function ClassSchedule() {
     "Saturday",
   ];
 
-  const handleMaterialsClick = (material: Material) => {
-    window.open(material.url, "_blank");
-  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -366,12 +359,6 @@ export default function ClassSchedule() {
     }
   };
 
-  const handleAddNote = (classId: string) => {
-    if (!newNote.trim()) return;
-    // Update notes in your data management system
-    setNewNote("");
-    setShowNoteInput(false);
-  };
 
   const handleAttendance = (classId: string, status: Attendance["status"]) => {
     setAttendance((prev) => ({
@@ -384,22 +371,6 @@ export default function ClassSchedule() {
     }));
   };
 
-  const exportToCalendar = (
-    classItem: Class,
-    dayName: string,
-    timeSlot: string
-  ) => {
-    const icsData = generateICSFile(classItem, dayName, timeSlot);
-    const blob = new Blob([icsData], { type: "text/calendar;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `${classItem.subject}_${dayName}.ics`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  };
 
   const exportScheduleToCalendar = () => {
     let allEvents: string[] = [];
