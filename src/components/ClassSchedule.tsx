@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "../components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "../components/ui/dialog";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -337,7 +333,6 @@ export default function ClassSchedule() {
     "Saturday",
   ];
 
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
@@ -359,7 +354,6 @@ export default function ClassSchedule() {
     }
   };
 
-
   const handleAttendance = (classId: string, status: Attendance["status"]) => {
     setAttendance((prev) => ({
       ...prev,
@@ -370,7 +364,6 @@ export default function ClassSchedule() {
       },
     }));
   };
-
 
   const exportScheduleToCalendar = () => {
     let allEvents: string[] = [];
@@ -631,7 +624,7 @@ export default function ClassSchedule() {
                   (value): value is Class =>
                     typeof value === "object" &&
                     value !== null &&
-                    value.nextAssignment
+                    "nextAssignment" in value
                 )
                 .map((classItem) => ({
                   subject: classItem.subject,
@@ -1204,12 +1197,17 @@ export default function ClassSchedule() {
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                         <Card className="border-0 shadow-none">
-                          <CardHeader className={`${classItem.color} rounded-t-lg space-y-1`}>
+                          <CardHeader
+                            className={`${classItem.color} rounded-t-lg space-y-1`}
+                          >
                             <div className="flex items-center justify-between">
                               <CardTitle className="text-2xl font-bold">
                                 {classItem.subject}
                               </CardTitle>
-                              <Badge variant="secondary" className="font-medium">
+                              <Badge
+                                variant="secondary"
+                                className="font-medium"
+                              >
                                 {classItem.courseType || "Regular Course"}
                               </Badge>
                             </div>
@@ -1309,9 +1307,7 @@ export default function ClassSchedule() {
 
                             {/* Course Details */}
                             <div className="space-y-4">
-                              <h3 className="font-semibold">
-                                Course Details
-                              </h3>
+                              <h3 className="font-semibold">Course Details</h3>
                               <p className="text-sm text-muted-foreground">
                                 {classItem.description ||
                                   "This course covers fundamental concepts and practical applications."}
@@ -1480,8 +1476,8 @@ export default function ClassSchedule() {
                                             />
                                           </svg>
                                           <span className="text-muted-foreground">
-                                            {classItem.nextAssignment
-                                              .status === "completed"
+                                            {classItem.nextAssignment.status ===
+                                            "completed"
                                               ? "Completed"
                                               : classItem.nextAssignment
                                                   .status === "in-progress"
@@ -1540,9 +1536,7 @@ export default function ClassSchedule() {
                             {classItem.attendance &&
                               classItem.attendance.length > 0 && (
                                 <div className="space-y-4">
-                                  <h3 className="font-semibold">
-                                    Attendance
-                                  </h3>
+                                  <h3 className="font-semibold">Attendance</h3>
                                   <ul className="list-disc pl-6 text-sm text-muted-foreground">
                                     {classItem.attendance.map(
                                       (attendanceItem, index) => (
@@ -1600,17 +1594,16 @@ export default function ClassSchedule() {
                               )}
 
                             {/* Notes Section */}
-                            {classItem.notes &&
-                              classItem.notes.length > 0 && (
-                                <div className="space-y-4">
-                                  <h3 className="font-semibold">Notes</h3>
-                                  <ul className="list-disc pl-6 text-sm text-muted-foreground">
-                                    {classItem.notes.map((note, index) => (
-                                      <li key={index}>{note}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
+                            {classItem.notes && classItem.notes.length > 0 && (
+                              <div className="space-y-4">
+                                <h3 className="font-semibold">Notes</h3>
+                                <ul className="list-disc pl-6 text-sm text-muted-foreground">
+                                  {classItem.notes.map((note, index) => (
+                                    <li key={index}>{note}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
                           </CardContent>
                         </Card>
                       </DialogContent>
