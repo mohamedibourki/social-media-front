@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -131,7 +131,7 @@ const sectionNumberClasses =
 
 export default function Support() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
+  const [, setReferenceNumber] = useState<string | null>(null);
   const [isDraftSaving, setIsDraftSaving] = useState(false);
   const [isDraftLoading, setIsDraftLoading] = useState(true);
 
@@ -607,7 +607,7 @@ export default function Support() {
                             each)
                           </p>
                           <FormMessage />
-                          <FilePreview files={field.value} />
+                          <FilePreview files={field.value || null} />
                         </FormItem>
                       )}
                     />

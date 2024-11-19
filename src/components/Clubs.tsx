@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { clubs } from "../data/mock-data";
 import { useToast } from "../hooks/use-toast";
 import { ClubCard } from "../components/ClubCard";
-import { ClubDetailsPanel } from "../components/ClubDetailsPanel";
 import SocialMediaPost from "./SocialMediaPost";
 import { generateClubPosts } from "../data/club-posts";
 import { Input } from "../components/ui/input";
@@ -22,15 +21,19 @@ import {
   MessageSquare,
   ChartBar,
   Bell,
-  Shield,
   PlusCircle,
   BarChart2,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Card } from "../components/ui/card";
-import { Tooltip } from "../components/ui/tooltip";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
 import { formatDistanceToNow } from "date-fns";
 
 // Add new interfaces
@@ -42,7 +45,7 @@ interface ClubAnnouncement {
   author: string;
   authorAvatar?: string;
   isPinned?: boolean;
-  type?: 'info' | 'warning' | 'success';
+  type?: "info" | "warning" | "success";
 }
 
 interface ClubRole {
@@ -127,35 +130,48 @@ interface ActivityLog {
   details?: string;
 }
 
+interface ClubStats {
+  totalPosts: number;
+  activeDiscussions: number;
+  totalEvents: number;
+  completedEvents: number;
+  averageAttendance: number;
+  memberGrowthRate: number;
+  engagementRate: number;
+  topContributors: ClubMember[];
+}
+
 export default function Clubs() {
   const [clubsList, setClubsList] = useState(clubs);
   const [selectedClub, setSelectedClub] = useState(() => clubs[0] || null);
-  const [showDetailsPanel, setShowDetailsPanel] = useState(false);
+  const [, setShowDetailsPanel] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("feed");
-  const [announcements, setAnnouncements] = useState<ClubAnnouncement[]>([
+  const [announcements] = useState<ClubAnnouncement[]>([
     {
       id: "1",
       title: "New Club Guidelines",
-      content: "We've updated our club guidelines to ensure a better experience for all members. Please review the new rules.",
+      content:
+        "We've updated our club guidelines to ensure a better experience for all members. Please review the new rules.",
       date: "2024-03-15",
       author: "Club Admin",
       authorAvatar: "/avatars/admin.jpg",
       isPinned: true,
-      type: "info"
+      type: "info",
     },
     {
       id: "2",
       title: "Upcoming Virtual Meetup",
-      content: "Join us this Saturday for our monthly virtual meetup. We'll be discussing upcoming projects and initiatives.",
+      content:
+        "Join us this Saturday for our monthly virtual meetup. We'll be discussing upcoming projects and initiatives.",
       date: "2024-03-14",
       author: "Event Coordinator",
-      type: "success"
-    }
+      type: "success",
+    },
   ]);
-  const [members, setMembers] = useState<ClubMember[]>([
+  const [members] = useState<ClubMember[]>([
     {
       id: "1",
       name: "Sarah Johnson",
@@ -170,24 +186,24 @@ export default function Clubs() {
           name: "Founding Member",
           icon: "🌟",
           description: "One of the first 10 members",
-          earnedDate: "2023-12-01"
+          earnedDate: "2023-12-01",
         },
         {
           id: "2",
           name: "Top Contributor",
           icon: "🏆",
           description: "Made over 100 contributions",
-          earnedDate: "2024-02-15"
-        }
+          earnedDate: "2024-02-15",
+        },
       ],
       lastActive: "2024-03-15T10:30:00Z",
       socialLinks: {
         twitter: "sarahj",
         github: "sarahjohnson",
-        linkedin: "sarah-johnson"
+        linkedin: "sarah-johnson",
       },
       skills: ["React", "TypeScript", "UI/UX"],
-      bio: "Full-stack developer passionate about building communities"
+      bio: "Full-stack developer passionate about building communities",
     },
     {
       id: "2",
@@ -202,10 +218,10 @@ export default function Clubs() {
       socialLinks: {
         twitter: "mikechen",
         github: "mikechen",
-        linkedin: "mike-chen"
+        linkedin: "mike-chen",
       },
       skills: ["JavaScript", "Node.js", "MongoDB"],
-      bio: "Software engineer with a focus on backend development"
+      bio: "Software engineer with a focus on backend development",
     },
     {
       id: "3",
@@ -220,20 +236,21 @@ export default function Clubs() {
       socialLinks: {
         twitter: "emmawilson",
         github: "emmawilson",
-        linkedin: "emma-wilson"
+        linkedin: "emma-wilson",
       },
       skills: ["HTML", "CSS", "JavaScript"],
-      bio: "Frontend developer with a passion for design"
-    }
+      bio: "Frontend developer with a passion for design",
+    },
   ]);
   const [memberSearchQuery, setMemberSearchQuery] = useState("");
   const [memberRoleFilter, setMemberRoleFilter] = useState<string>("all");
   const [memberStatusFilter, setMemberStatusFilter] = useState<string>("all");
-  const [events, setEvents] = useState<ClubEvent[]>([
+  const [events] = useState<ClubEvent[]>([
     {
       id: "1",
       title: "Monthly Book Discussion",
-      description: "Join us for an engaging discussion about this month's selected book: 'The Innovator's Dilemma'",
+      description:
+        "Join us for an engaging discussion about this month's selected book: 'The Innovator's Dilemma'",
       date: "2024-03-20",
       time: "18:00",
       location: "Zoom Meeting",
@@ -243,14 +260,14 @@ export default function Clubs() {
           userId: "1",
           status: "confirmed",
           joinedAt: "2024-03-15T14:30:00Z",
-          notes: "Looking forward to the discussion!"
+          notes: "Looking forward to the discussion!",
         },
         {
           userId: "2",
           status: "maybe",
           joinedAt: "2024-03-15T14:30:00Z",
-          notes: "Might be busy that day, but I'll try to join!"
-        }
+          notes: "Might be busy that day, but I'll try to join!",
+        },
       ],
       maxAttendees: 30,
       organizer: "Sarah Johnson",
@@ -258,19 +275,19 @@ export default function Clubs() {
       tags: ["book-club", "discussion", "monthly-event"],
       recurring: {
         frequency: "monthly",
-        endDate: "2024-12-31"
+        endDate: "2024-12-31",
       },
       resources: [
         {
           title: "Book Summary",
           url: "https://example.com/book-summary",
-          type: "document"
+          type: "document",
         },
         {
           title: "Discussion Guide",
           url: "https://example.com/discussion-guide",
-          type: "document"
-        }
+          type: "document",
+        },
       ],
       requirements: ["Read the book before the discussion"],
       waitlist: [],
@@ -278,14 +295,15 @@ export default function Clubs() {
         {
           name: "Book Publisher",
           logo: "/logos/book-publisher.png",
-          website: "https://example.com/book-publisher"
-        }
-      ]
+          website: "https://example.com/book-publisher",
+        },
+      ],
     },
     {
       id: "2",
       title: "Tech Workshop: AI Basics",
-      description: "Learn the fundamentals of AI and machine learning in this hands-on workshop",
+      description:
+        "Learn the fundamentals of AI and machine learning in this hands-on workshop",
       date: "2024-03-25",
       time: "14:00",
       location: "Tech Hub, Room 3B",
@@ -295,8 +313,8 @@ export default function Clubs() {
           userId: "2",
           status: "confirmed",
           joinedAt: "2024-03-15T14:30:00Z",
-          notes: "Looking forward to the workshop!"
-        }
+          notes: "Looking forward to the workshop!",
+        },
       ],
       maxAttendees: 50,
       organizer: "Mike Chen",
@@ -304,19 +322,19 @@ export default function Clubs() {
       tags: ["workshop", "tech", "AI"],
       recurring: {
         frequency: "monthly",
-        endDate: "2024-12-31"
+        endDate: "2024-12-31",
       },
       resources: [
         {
           title: "AI Introduction",
           url: "https://example.com/ai-introduction",
-          type: "video"
+          type: "video",
         },
         {
           title: "AI Case Studies",
           url: "https://example.com/ai-case-studies",
-          type: "document"
-        }
+          type: "document",
+        },
       ],
       requirements: ["Bring a laptop"],
       waitlist: [],
@@ -324,12 +342,12 @@ export default function Clubs() {
         {
           name: "Tech Company",
           logo: "/logos/tech-company.png",
-          website: "https://example.com/tech-company"
-        }
-      ]
-    }
+          website: "https://example.com/tech-company",
+        },
+      ],
+    },
   ]);
-  const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([
+  const [activityLogs] = useState<ActivityLog[]>([
     {
       id: "1",
       type: "join",
@@ -345,7 +363,7 @@ export default function Clubs() {
       userAvatar: "/avatars/mike.jpg",
       action: "shared a new post",
       timestamp: "2024-03-15T13:15:00Z",
-      details: "Introduction to Machine Learning Concepts"
+      details: "Introduction to Machine Learning Concepts",
     },
     {
       id: "3",
@@ -354,28 +372,33 @@ export default function Clubs() {
       userAvatar: "/avatars/sarah.jpg",
       action: "earned a badge",
       timestamp: "2024-03-15T12:00:00Z",
-      details: "Top Contributor of the Month"
-    }
+      details: "Top Contributor of the Month",
+    },
   ]);
   const [roles] = useState<ClubRole[]>([
     {
       id: "1",
       name: "admin",
-      permissions: ["manage_members", "manage_events", "manage_content", "manage_roles"],
-      color: "#FF4444"
+      permissions: [
+        "manage_members",
+        "manage_events",
+        "manage_content",
+        "manage_roles",
+      ],
+      color: "#FF4444",
     },
     {
       id: "2",
       name: "moderator",
       permissions: ["manage_content", "moderate_discussions"],
-      color: "#44AA44"
+      color: "#44AA44",
     },
     {
       id: "3",
       name: "member",
       permissions: ["create_posts", "join_events"],
-      color: "#4444FF"
-    }
+      color: "#4444FF",
+    },
   ]);
 
   const categories = [
@@ -409,22 +432,22 @@ export default function Clubs() {
           ? {
               ...club,
               isJoined: !club.isJoined,
-              memberCount: club.isJoined 
+              memberCount: club.isJoined
                 ? club.memberCount - 1
-                : club.memberCount + 1
+                : club.memberCount + 1,
             }
           : club
       )
     );
 
-    setSelectedClub((current) => {
+    setSelectedClub((current: any) => {
       if (current?.id === clubId) {
         return {
           ...current,
           isJoined: !current.isJoined,
-          memberCount: current.isJoined 
+          memberCount: current.isJoined
             ? current.memberCount - 1
-            : current.memberCount + 1
+            : current.memberCount + 1,
         };
       }
       return current;
@@ -462,26 +485,19 @@ export default function Clubs() {
     }));
   };
 
-  const filteredMembers = members.filter(member => {
-    const matchesSearch = member.name.toLowerCase().includes(memberSearchQuery.toLowerCase());
-    const matchesRole = memberRoleFilter === "all" || member.role === memberRoleFilter;
-    const matchesStatus = memberStatusFilter === "all" || member.status === memberStatusFilter;
+  const filteredMembers = members.filter((member) => {
+    const matchesSearch = member.name
+      .toLowerCase()
+      .includes(memberSearchQuery.toLowerCase());
+    const matchesRole =
+      memberRoleFilter === "all" || member.role === memberRoleFilter;
+    const matchesStatus =
+      memberStatusFilter === "all" || member.status === memberStatusFilter;
     return matchesSearch && matchesRole && matchesStatus;
   });
 
-  // Add new state for club settings and permissions
-  const [clubSettings, setClubSettings] = useState({
-    isPrivate: false,
-    requiresApproval: true,
-    allowGuestViewing: true,
-    maxMembers: 1000,
-    defaultMemberRole: "member",
-    autoArchiveInactivePosts: true,
-    inactivityThresholdDays: 30,
-  });
-
   // Add new state for club statistics
-  const [clubStats, setClubStats] = useState({
+  const [, setClubStats] = useState<ClubStats>({
     totalPosts: 0,
     activeDiscussions: 0,
     totalEvents: 0,
@@ -492,125 +508,33 @@ export default function Clubs() {
     topContributors: [],
   });
 
-  // Add functions for club management
-  const handleUpdateClubSettings = (newSettings: typeof clubSettings) => {
-    setClubSettings(newSettings);
-    toast({
-      title: "Settings updated",
-      description: "Club settings have been successfully updated.",
-    });
-  };
-
-  const handleMemberRole = (memberId: string, newRole: ClubRole["name"]) => {
-    setMembers(members.map(member => 
-      member.id === memberId ? { ...member, role: newRole } : member
-    ));
-    toast({
-      title: "Role updated",
-      description: "Member role has been successfully updated.",
-    });
-  };
-
-  const handleRemoveMember = (memberId: string) => {
-    setMembers(members.filter(member => member.id !== memberId));
-    toast({
-      title: "Member removed",
-      description: "Member has been removed from the club.",
-    });
-  };
-
-  // Add function for event management
-  const handleEventRSVP = (eventId: string, userId: string, status: ClubEventAttendee["status"]) => {
-    setEvents(events.map(event => {
-      if (event.id === eventId) {
-        const existingAttendeeIndex = event.attendees.findIndex(a => a.userId === userId);
-        const updatedAttendees = [...event.attendees];
-
-        if (existingAttendeeIndex >= 0) {
-          updatedAttendees[existingAttendeeIndex] = {
-            ...updatedAttendees[existingAttendeeIndex],
-            status,
-          };
-        } else {
-          updatedAttendees.push({
-            userId,
-            status,
-            joinedAt: new Date().toISOString(),
-          });
-        }
-
-        return {
-          ...event,
-          attendees: updatedAttendees,
-        };
-      }
-      return event;
-    }));
-  };
-
-  // Add function for announcement management
-  const handleAddAnnouncement = (announcement: Omit<ClubAnnouncement, "id">) => {
-    const newAnnouncement = {
-      id: `announcement-${Date.now()}`,
-      ...announcement,
-    };
-    setAnnouncements([newAnnouncement, ...announcements]);
-    
-    // Add to activity log
-    const newActivity: ActivityLog = {
-      id: `activity-${Date.now()}`,
-      type: "announcement",
-      user: announcement.author,
-      userAvatar: announcement.authorAvatar || "",
-      action: "created a new announcement",
-      timestamp: new Date().toISOString(),
-      details: announcement.title,
-    };
-    setActivityLogs([newActivity, ...activityLogs]);
-  };
-
-  // Add function to track member activity
-  const trackMemberActivity = (memberId: string, activityType: ActivityLog["type"]) => {
-    const member = members.find(m => m.id === memberId);
-    if (!member) return;
-
-    // Update member's last active timestamp
-    setMembers(members.map(m => 
-      m.id === memberId ? { ...m, lastActive: new Date().toISOString() } : m
-    ));
-
-    // Add to activity logs
-    const newActivity: ActivityLog = {
-      id: `activity-${Date.now()}`,
-      type: activityType,
-      user: member.name,
-      userAvatar: member.avatar,
-      action: `performed a ${activityType} action`,
-      timestamp: new Date().toISOString(),
-    };
-    setActivityLogs([newActivity, ...activityLogs]);
-  };
-
   // Add useEffect for statistics calculation
   useEffect(() => {
     if (!selectedClub) return;
 
     const calculateStats = () => {
       const posts = getClubPosts();
-      const activeMembers = members.filter(m => m.status === "active");
-      
+
       setClubStats({
         totalPosts: posts.length,
-        activeDiscussions: posts.filter(p => p.engagement.comments > 0).length,
+        activeDiscussions: posts.filter((p) => p.engagement.comments > 0)
+          .length,
         totalEvents: events.length,
-        completedEvents: events.filter(e => e.status === "completed").length,
-        averageAttendance: events.reduce((acc, event) => 
-          acc + event.attendees.filter(a => a.status === "confirmed").length, 0
-        ) / Math.max(events.length, 1),
+        completedEvents: events.filter((e) => e.status === "completed").length,
+        averageAttendance:
+          events.reduce(
+            (acc, event) =>
+              acc +
+              event.attendees.filter((a) => a.status === "confirmed").length,
+            0
+          ) / Math.max(events.length, 1),
         memberGrowthRate: 0, // Calculate based on historical data
-        engagementRate: posts.reduce((acc, post) => 
-          acc + post.engagement.likes + post.engagement.comments, 0
-        ) / Math.max(posts.length, 1),
+        engagementRate:
+          posts.reduce(
+            (acc, post) =>
+              acc + post.engagement.likes + post.engagement.comments,
+            0
+          ) / Math.max(posts.length, 1),
         topContributors: members
           .sort((a, b) => b.contributions - a.contributions)
           .slice(0, 5),
@@ -666,15 +590,18 @@ export default function Clubs() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-lg font-semibold">Members ({filteredMembers.length})</h3>
+                <h3 className="text-lg font-semibold">
+                  Members ({filteredMembers.length})
+                </h3>
                 <p className="text-sm text-gray-500">
-                  {members.filter(m => m.status === "active").length} active members
+                  {members.filter((m) => m.status === "active").length} active
+                  members
                 </p>
               </div>
               <div className="flex gap-4">
                 <div className="flex flex-col gap-2">
-                  <Input 
-                    placeholder="Search members..." 
+                  <Input
+                    placeholder="Search members..."
                     value={memberSearchQuery}
                     onChange={(e) => setMemberSearchQuery(e.target.value)}
                     className="w-64"
@@ -686,8 +613,10 @@ export default function Clubs() {
                       onChange={(e) => setMemberRoleFilter(e.target.value)}
                     >
                       <option value="all">All Roles</option>
-                      {roles.map(role => (
-                        <option key={role.id} value={role.name}>{role.name}</option>
+                      {roles.map((role) => (
+                        <option key={role.id} value={role.name}>
+                          {role.name}
+                        </option>
                       ))}
                     </select>
                     <select
@@ -721,76 +650,111 @@ export default function Clubs() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <h4 className="font-medium">{member.name}</h4>
-                          <Badge 
-                            variant="outline" 
-                            style={{ color: roles.find(r => r.name === member.role)?.color }}
+                          <Badge
+                            variant="outline"
+                            style={{
+                              color: roles.find((r) => r.name === member.role)
+                                ?.color,
+                            }}
                           >
                             {member.role}
                           </Badge>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1">{member.bio}</p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {member.bio}
+                        </p>
                         <div className="flex items-center gap-2 mt-2">
-                          {member.socialLinks && Object.entries(member.socialLinks).map(([platform, handle]) => (
-                            <a 
-                              key={platform} 
-                              href={`https://${platform}.com/${handle}`}
-                              className="text-gray-500 hover:text-gray-700"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <span className="text-sm">{platform}</span>
-                            </a>
-                          ))}
+                          {member.socialLinks &&
+                            Object.entries(member.socialLinks).map(
+                              ([platform, handle]) => (
+                                <a
+                                  key={platform}
+                                  href={`https://${platform}.com/${handle}`}
+                                  className="text-gray-500 hover:text-gray-700"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <span className="text-sm">{platform}</span>
+                                </a>
+                              )
+                            )}
                         </div>
                       </div>
-                      <Badge variant={
-                        member.status === "active" ? "success" :
-                        member.status === "inactive" ? "secondary" : "destructive"
-                      }>
+                      <Badge
+                        variant={
+                          member.status === "active"
+                            ? "default"
+                            : member.status === "inactive"
+                            ? "secondary"
+                            : "destructive"
+                        }
+                      >
                         {member.status}
                       </Badge>
                     </div>
 
                     <div className="flex gap-2 flex-wrap">
-                      {member.skills.map(skill => (
-                        <Badge key={skill} variant="outline" className="text-xs">
+                      {member.skills.map((skill) => (
+                        <Badge
+                          key={skill}
+                          variant="outline"
+                          className="text-xs"
+                        >
                           {skill}
                         </Badge>
                       ))}
                     </div>
 
                     <div className="flex items-center justify-between text-sm text-gray-500">
-                      <div>Joined {new Date(member.joinDate).toLocaleDateString()}</div>
+                      <div>
+                        Joined {new Date(member.joinDate).toLocaleDateString()}
+                      </div>
                       <div>{member.contributions} contributions</div>
-                      <div>Last active {formatDistanceToNow(new Date(member.lastActive))} ago</div>
+                      <div>
+                        Last active{" "}
+                        {formatDistanceToNow(new Date(member.lastActive))} ago
+                      </div>
                     </div>
 
                     {member.badges.length > 0 && (
                       <div className="flex gap-2">
-                        {member.badges.map(badge => (
-                          <Tooltip key={badge.id} content={badge.description}>
+                        {member.badges.map((badge) => (
+                          <Tooltip key={badge.id}>
+                          <TooltipTrigger>
                             <div className="flex items-center gap-1 text-sm bg-gray-50 px-2 py-1 rounded">
                               <span>{badge.icon}</span>
                               <span>{badge.name}</span>
                             </div>
+                          </TooltipTrigger>
+                            <TooltipContent>{badge.description}</TooltipContent>
                           </Tooltip>
                         ))}
                       </div>
                     )}
 
                     <div className="flex justify-end gap-2">
-                      <Button size="sm" variant="outline">Message</Button>
-                      <Button size="sm" variant="outline">View Profile</Button>
+                      <Button size="sm" variant="outline">
+                        Message
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        View Profile
+                      </Button>
                       {member.role !== "admin" && (
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button size="sm" variant="outline">Manage</Button>
+                            <Button size="sm" variant="outline">
+                              Manage
+                            </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
                             <DropdownMenuItem>Change Role</DropdownMenuItem>
-                            <DropdownMenuItem>Remove from Club</DropdownMenuItem>
+                            <DropdownMenuItem>
+                              Remove from Club
+                            </DropdownMenuItem>
                             {member.status !== "banned" ? (
-                              <DropdownMenuItem className="text-red-600">Ban Member</DropdownMenuItem>
+                              <DropdownMenuItem className="text-red-600">
+                                Ban Member
+                              </DropdownMenuItem>
                             ) : (
                               <DropdownMenuItem>Unban Member</DropdownMenuItem>
                             )}
@@ -934,22 +898,34 @@ export default function Clubs() {
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <div className="text-sm text-gray-600">Posts This Week</div>
                   <div className="text-2xl font-semibold mt-1">24</div>
-                  <div className="text-xs text-green-600 mt-1">↑ 12% vs last week</div>
+                  <div className="text-xs text-green-600 mt-1">
+                    ↑ 12% vs last week
+                  </div>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="text-sm text-gray-600">Active Discussions</div>
+                  <div className="text-sm text-gray-600">
+                    Active Discussions
+                  </div>
                   <div className="text-2xl font-semibold mt-1">8</div>
-                  <div className="text-xs text-red-600 mt-1">↓ 3% vs last week</div>
+                  <div className="text-xs text-red-600 mt-1">
+                    ↓ 3% vs last week
+                  </div>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <div className="text-sm text-gray-600">New Members</div>
                   <div className="text-2xl font-semibold mt-1">15</div>
-                  <div className="text-xs text-green-600 mt-1">↑ 25% vs last week</div>
+                  <div className="text-xs text-green-600 mt-1">
+                    ↑ 25% vs last week
+                  </div>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="text-sm text-gray-600">Avg. Response Time</div>
+                  <div className="text-sm text-gray-600">
+                    Avg. Response Time
+                  </div>
                   <div className="text-2xl font-semibold mt-1">2.5h</div>
-                  <div className="text-xs text-green-600 mt-1">↑ 15% faster</div>
+                  <div className="text-xs text-green-600 mt-1">
+                    ↑ 15% faster
+                  </div>
                 </div>
               </div>
             </Card>
@@ -957,7 +933,9 @@ export default function Clubs() {
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold">Recent Activity</h3>
-                <Button variant="outline" size="sm">Export Log</Button>
+                <Button variant="outline" size="sm">
+                  Export Log
+                </Button>
               </div>
               <div className="space-y-4">
                 {activityLogs.map((log) => (
@@ -968,10 +946,13 @@ export default function Clubs() {
                     </Avatar>
                     <div className="flex-1">
                       <p className="text-sm">
-                        <span className="font-medium">{log.user}</span>{' '}
+                        <span className="font-medium">{log.user}</span>{" "}
                         {log.action}
                         {log.details && (
-                          <span className="text-gray-600"> - {log.details}</span>
+                          <span className="text-gray-600">
+                            {" "}
+                            - {log.details}
+                          </span>
                         )}
                       </p>
                       <p className="text-xs text-gray-500 mt-1">
@@ -998,7 +979,7 @@ export default function Clubs() {
                 Create Event
               </Button>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4">
               {events.map((event) => (
                 <Card key={event.id} className="p-4">
@@ -1006,16 +987,23 @@ export default function Clubs() {
                     <div className="flex items-start justify-between">
                       <div>
                         <h4 className="font-medium">{event.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{event.description}</p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {event.description}
+                        </p>
                       </div>
-                      <Badge variant={
-                        event.type === "online" ? "default" :
-                        event.type === "in-person" ? "secondary" : "outline"
-                      }>
+                      <Badge
+                        variant={
+                          event.type === "online"
+                            ? "default"
+                            : event.type === "in-person"
+                            ? "secondary"
+                            : "outline"
+                        }
+                      >
                         {event.type}
                       </Badge>
                     </div>
-                    
+
                     <div className="flex items-center gap-4 text-sm text-gray-600">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
@@ -1030,17 +1018,18 @@ export default function Clubs() {
                         {event.location}
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-gray-500" />
                         <span className="text-sm text-gray-600">
-                          {event.attendees.length}/{event.maxAttendees} attendees
+                          {event.attendees.length}/{event.maxAttendees}{" "}
+                          attendees
                         </span>
                       </div>
                       <Button size="sm">RSVP</Button>
                     </div>
-                    
+
                     <div className="flex gap-2 flex-wrap">
                       {event.tags.map((tag) => (
                         <Badge key={tag} variant="outline" className="text-xs">
@@ -1185,7 +1174,7 @@ export default function Clubs() {
             <Tabs
               value={activeTab}
               onValueChange={setActiveTab}
-              className="w-full w-[672px]"
+              className="w-full"
             >
               <TabsList className="grid grid-cols-4 gap-4 bg-transparent">
                 <TabsTrigger

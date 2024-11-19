@@ -1,11 +1,10 @@
-import { Club } from "../types";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Users, MapPin, Clock } from "lucide-react";
 
 interface ClubCardProps {
-  club: Club;
+  club: any;
   isSelected: boolean;
   onSelect: () => void;
   onJoinClick: (clubId: string) => void;

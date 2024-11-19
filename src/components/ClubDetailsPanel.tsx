@@ -1,4 +1,3 @@
-import { Club } from '../types';
 import { Button } from '../components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../components/ui/sheet';
 import { Badge } from '../components/ui/badge';

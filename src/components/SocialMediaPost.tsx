@@ -18,7 +18,6 @@ import {
   Share2,
   MoreHorizontal,
   Bookmark,
-  MapPin,
   Send,
 } from "lucide-react";
 import {
@@ -40,7 +39,7 @@ import {
   TooltipTrigger,
 } from "../components/ui/tooltip";
 import { cn } from "../lib/utils";
-import { Calendar, Camera, Globe2, ThumbsUp, Users } from "lucide-react";
+import { Calendar, Camera, Globe2, Users } from "lucide-react";
 
 const SCHOOL_IMAGES = {
   logo: "https://images.unsplash.com/photo-1594312915251-48db9280c8f1?w=400&h=400&fit=crop", // university shield
