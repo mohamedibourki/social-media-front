@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "../components/ui/dialog";
 import { Button } from "../components/ui/button";
@@ -13,7 +11,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
@@ -22,7 +19,6 @@ import { Separator } from "../components/ui/separator";
 import {
   Download,
   Calendar,
-  Edit,
   Check,
   Printer,
   ChevronLeft,
