@@ -70,9 +70,9 @@ export const Chats = () => {
         id: Date.now(),
         message: data.message,
         sender: "bot",
-        from: data.from
+        from: data.from,
       };
-      setMessages(prev => [...prev, newMessage]);
+      setMessages((prev) => [...prev, newMessage]);
     });
 
     // Listen for typing indicators
@@ -93,14 +93,14 @@ export const Chats = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputMessage(e.target.value);
-    
+
     // Handle typing indicator
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
 
     socketService.sendTyping(1); // Replace 1 with actual receiver ID
-    
+
     typingTimeoutRef.current = setTimeout(() => {
       socketService.sendStopTyping(1); // Replace 1 with actual receiver ID
     }, 1000);
@@ -108,7 +108,7 @@ export const Chats = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!inputMessage.trim()) return;
 
     // Add message to local state
@@ -117,14 +117,14 @@ export const Chats = () => {
       message: inputMessage,
       sender: "user",
     };
-    setMessages(prev => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
 
     // Send message through socket
     socketService.sendPrivateMessage(1, inputMessage); // Replace 1 with actual receiver ID
-    
+
     // Clear input
     setInputMessage("");
-    
+
     // Clear typing indicator
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
@@ -202,7 +202,7 @@ export const Chats = () => {
                   <AvatarFallback className="rounded-full">CN</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h1 className="text-md font-semibold">Mohamed Ibrahim</h1>
+                  <h1 className="text-md font-semibold">Rachid Alami</h1>
                   <p className="text-xs text-gray-500">
                     You need to accept the request
                   </p>
@@ -216,28 +216,33 @@ export const Chats = () => {
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="personal">
-            <Card>
-              <CardHeader>
-                <CardTitle>Password</CardTitle>
-                <CardDescription>
-                  Change your password here. After saving, you'll be logged out.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="current">Current password</Label>
-                  <Input id="current" type="password" />
+          <TabsContent
+            value="personal"
+            className="hover:bg-gray-200 rounded-lg hover:rounded-lg transition-colors duration-200 cursor-pointer p-3"
+          >
+            <div className="flex items-center justify-between w-full gap-3">
+              <div className="flex items-center gap-3">
+                <Avatar className="h-11 w-11 rounded-full">
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="John Doe"
+                  />
+                  <AvatarFallback className="rounded-full">CN</AvatarFallback>
+                </Avatar>
+                <div>
+                  <h1 className="text-md font-semibold">Rachid Alami</h1>
+                  <p className="text-xs text-gray-500">
+                    You need to accept the request
+                  </p>
                 </div>
-                <div className="space-y-1">
-                  <Label htmlFor="new">New password</Label>
-                  <Input id="new" type="password" />
+              </div>
+              <div className="flex flex-col items-end justify-center">
+                <p className="text-xs text-gray-500">12:00 AM</p>
+                <div className="flex items-center gap-1">
+                  <CheckCheck size={20} color="blue" />
                 </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Save password</Button>
-              </CardFooter>
-            </Card>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
@@ -297,7 +302,10 @@ export const Chats = () => {
             </ChatBubble>
           )}
         </ChatMessageList>
-        <form onSubmit={handleSubmit} className="relative w-full rounded-3xl border bg-background focus-within:ring-1 focus-within:ring-ring p-1">
+        <form
+          onSubmit={handleSubmit}
+          className="relative w-full rounded-3xl border bg-background focus-within:ring-1 focus-within:ring-ring p-1"
+        >
           <ChatInput
             value={inputMessage}
             onChange={handleInputChange}
@@ -315,7 +323,11 @@ export const Chats = () => {
               <span className="sr-only">Use Microphone</span>
             </Button>
 
-            <Button type="submit" size="sm" className="ml-auto gap-1.5 rounded-3xl">
+            <Button
+              type="submit"
+              size="sm"
+              className="ml-auto gap-1.5 rounded-3xl"
+            >
               Send Message
               <CornerDownLeft className="size-3.5" />
             </Button>

@@ -46,8 +46,8 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Saad",
+    email: "saadkanani@princeton.com",
   },
   teams: [
     {
